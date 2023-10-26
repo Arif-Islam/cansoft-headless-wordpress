@@ -108,7 +108,7 @@ const Navbar = ({ title, menus, dropdownMenus }) => {
             {menus?.map((menu, index) => {
               if (menu === "Home") {
                 return (
-                  <Link key={index} href="/" className="text-white">
+                  <Link key={index} href="/" className="text-white pt-1">
                     Home
                   </Link>
                 );
