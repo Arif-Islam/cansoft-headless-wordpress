@@ -2,9 +2,6 @@ import { ChevronsRight } from "lucide-react";
 import React, { useState } from "react";
 
 const Card = ({ post }) => {
-  // const cat = post.categories.nodes[0].slug;
-
-  // console.log(post);
   return (
     <div className="w-auto md:w-[219px] lg:w-[299px] xl:w-[359px] mx-auto">
       <h1 className="text-[32px] font-medium  text-[#212529] mb-2">
