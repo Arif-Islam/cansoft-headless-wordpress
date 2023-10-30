@@ -1,8 +1,0 @@
-#navlinks {
-  transition: max-height 0.5s ease-in-out;
-  max-height: 0;
-}
-
-#navlinks .open {
-  max-height: 215px; 
-}

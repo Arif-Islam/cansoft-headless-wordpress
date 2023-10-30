@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import Navbar from "../components/Navbar";
@@ -16,11 +15,7 @@ const Home = () => {
   const [posts, setPosts] = useState([]);
   const [heroPost, setHeroPost] = useState([]);
   const [blogPost, setBlogPost] = useState([]);
-  const [nav, setNav] = useState();
   const [footer, setFooter] = useState([]);
-  const [title, setTitle] = useState("");
-  const [menus, setMenus] = useState([]);
-  const [dropdownMenus, setDropdownMenus] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -39,10 +34,6 @@ const Home = () => {
       return item.categories.nodes.some((category) => category.slug === "blog");
     });
 
-    const navbar = posts?.nodes?.find((item) => {
-      return item.categories.nodes.some((category) => category.slug === "nav");
-    });
-
     const last = posts?.nodes?.find((item) => {
       return item.categories.nodes.some(
         (category) => category.slug === "footer"
@@ -51,33 +42,13 @@ const Home = () => {
 
     setHeroPost(hero);
     setBlogPost(blogs);
-    setNav(navbar);
-
     setFooter(last);
-    setTitle(navbar?.title);
-
-    const matches = navbar?.excerpt.match(/<p>(.*?)\.(.*?)<\/p>/);
-
-    if (matches && matches.length >= 3) {
-      const elementsArray = matches[1]
-        .trim()
-        .split(",")
-        .map((item) => item.trim());
-
-      setMenus(elementsArray);
-
-      const actionsArray = matches[2]
-        .trim()
-        .split(",")
-        .map((item) => item.trim());
-
-      setDropdownMenus(actionsArray);
-    }
   }, [posts?.nodes]);
 
   return (
     <>
       <Head>
+        <link rel="preconnect" href="https://arifultest.csoft.ca/" />
         <title key="pagetitle">Welcome To HomePage</title>
         <meta
           name="description"
@@ -86,7 +57,7 @@ const Home = () => {
         />
       </Head>
       <div>
-        <Navbar title={title} menus={menus} dropdownMenus={dropdownMenus} />
+        <Navbar />
         <Hero heroPost={heroPost} />
         <div className="">
           <div className="md:w-[720px] lg:w-[960px] xl:w-[1140px] mx-auto px-[15px] py-6 flex flex-wrap gap-4 items-start justify-start">

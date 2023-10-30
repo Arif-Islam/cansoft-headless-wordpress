@@ -2,11 +2,20 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { Menu } from "lucide-react";
-// import "../styles/globals.css";
+import { getMenu } from "@/lib/menu";
 
-const Navbar = ({ title, menus, dropdownMenus }) => {
+const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
   const [menu, setMenu] = useState(false);
+  const [menuItems, setMenuItems] = useState([]);
+
+  useEffect(() => {
+    const fetchMenu = async () => {
+      const data = await getMenu();
+      setMenuItems(data);
+    };
+    fetchMenu();
+  }, []);
 
   const toggleMenu = () => {
     setMenu(!menu);
@@ -19,43 +28,38 @@ const Navbar = ({ title, menus, dropdownMenus }) => {
         <div className="px-4 h-full flex items-center justify-between">
           <div className="flex flex-col md:flex-row items-center md:justify-center">
             <Link href="#" className="text-[20px]  text-white mr-6">
-              {title}
+              Navbar
             </Link>
+
             <div className="hidden md:block space-x-4">
-              {menus?.map((menu, index) => {
-                if (menu === "Home") {
-                  return (
-                    <Link key={index} href="/" className="text-white">
-                      Home
-                    </Link>
-                  );
-                } else if (menu === "Link") {
+              {menuItems?.nodes?.map((menu) => {
+                if (menu.childItems?.nodes?.length === 0) {
                   return (
                     <Link
-                      key={index}
-                      href="/"
-                      className="text-[rgba(255,255,255,.5)] hover:text-[rgba(255,255,255,.7)]"
+                      key={menu.id}
+                      href={menu.url}
+                      className={`${menu.label === "Home" && "text-white"} ${
+                        menu.label === "Link" &&
+                        "text-[rgba(255,255,255,.5)] hover:text-[rgba(255,255,255,.7)]"
+                      } ${
+                        menu.label === "Disabled" &&
+                        "text-[#6b7072] cursor-default"
+                      } `}
                     >
-                      Link
+                      {menu.label}
                     </Link>
-                  );
-                } else if (menu === "Disabled") {
-                  return (
-                    <button key={index} className="text-[#6b7072] " disabled>
-                      Disabled
-                    </button>
                   );
                 } else {
                   return (
                     <div
-                      key={index}
+                      key={menu.id}
                       className=" relative inline-block text-white"
                     >
                       <div
                         className="flex items-center text-[rgba(255,255,255,.5)] hover:text-white"
                         onClick={() => setDropdown(!dropdown)}
                       >
-                        <button className="">{menu}</button>
+                        <button className="">{menu.label}</button>
                         <MdArrowDropDown></MdArrowDropDown>
                       </div>
                       <ul
@@ -63,10 +67,10 @@ const Navbar = ({ title, menus, dropdownMenus }) => {
                           dropdown ? "block" : "hidden"
                         } absolute space-y-1 py-2 mt-[10px] rounded-md  border-[1px] border-[rgba(0,0,0,.15)] bg-white text-[#212529] w-[200px] `}
                       >
-                        {dropdownMenus?.map((menu, index) => (
-                          <li key={index} className="hover:bg-gray-100 py-1 ">
-                            <Link href="/" className="pl-4">
-                              {menu}
+                        {menu.childItems?.nodes?.map((item) => (
+                          <li key={item.id} className="hover:bg-gray-100 py-1 ">
+                            <Link href={item.url} className="pl-4">
+                              {item.label}
                             </Link>
                           </li>
                         ))}
@@ -105,48 +109,42 @@ const Navbar = ({ title, menus, dropdownMenus }) => {
           } bg-[#343A40]  -mt-1 w-full pr-4 `}
         >
           <div className="flex flex-col items-start pl-4 space-y-4 w-full">
-            {menus?.map((menu, index) => {
-              if (menu === "Home") {
-                return (
-                  <Link key={index} href="/" className="text-white pt-1">
-                    Home
-                  </Link>
-                );
-              } else if (menu === "Link") {
+            {menuItems?.nodes?.map((menu) => {
+              if (menu.childItems?.nodes?.length === 0) {
                 return (
                   <Link
-                    key={index}
-                    href="/"
-                    className="text-[rgba(255,255,255,.5)] hover:text-[rgba(255,255,255,.7)]"
+                    key={menu.id}
+                    href={menu.url}
+                    className={`${menu.label === "Home" && "text-white"} ${
+                      menu.label === "Link" &&
+                      "text-[rgba(255,255,255,.5)] hover:text-[rgba(255,255,255,.7)]"
+                    } ${
+                      menu.label === "Disabled" &&
+                      "text-[#6b7072] cursor-default"
+                    } `}
                   >
-                    Link
+                    {menu.label}
                   </Link>
-                );
-              } else if (menu === "Disabled") {
-                return (
-                  <button key={index} className="text-[#6b7072] " disabled>
-                    Disabled
-                  </button>
                 );
               } else {
                 return (
-                  <div key={index} className="  text-white w-full">
+                  <div key={menu.id} className="  text-white w-full">
                     <div
                       className="flex items-center text-[rgba(255,255,255,.5)] hover:text-white"
                       onClick={() => setDropdown(!dropdown)}
                     >
-                      <button className="">{menu}</button>
+                      <button className="">{menu.label}</button>
                       <MdArrowDropDown></MdArrowDropDown>
                     </div>
                     <ul
                       className={`${
                         dropdown ? "block" : "hidden"
-                      }  space-y-1 py-2 mt-[10px] rounded-md  border-[1px] border-[rgba(0,0,0,.15)] bg-white text-[#212529] w-full`}
+                      } space-y-1 py-2 mt-[10px] rounded-md  border-[1px] border-[rgba(0,0,0,.15)] bg-white text-[#212529] w-full`}
                     >
-                      {dropdownMenus?.map((menu, index) => (
-                        <li key={index} className="hover:bg-gray-100 py-1 ">
-                          <Link href="/" className="pl-4">
-                            {menu}
+                      {menu.childItems?.nodes?.map((item) => (
+                        <li key={item.id} className="hover:bg-gray-100 py-1 ">
+                          <Link href={item.url} className="pl-4">
+                            {item.label}
                           </Link>
                         </li>
                       ))}
@@ -156,6 +154,7 @@ const Navbar = ({ title, menus, dropdownMenus }) => {
               }
             })}
           </div>
+
           <div className="pl-4 mt-4">
             <input
               type="text"
