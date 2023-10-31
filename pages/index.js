@@ -63,13 +63,11 @@ const Home = () => {
         <Navbar />
         <Hero heroPost={heroPost} />
         <div
-          className={`${
-            blogPost?.length < 4 && "h-[850px] md:h-[410px] lg:h-[330px]"
-          } ${
+          className={` ${
             blogPost?.length < 7 &&
             blogPost?.length > 3 &&
             "h-[1600px] md:h-[820px] lg:h-[660px]"
-          }`}
+          } h-[850px] md:h-[410px] lg:h-[330px]`}
         >
           <div className="md:w-[720px] lg:w-[960px] xl:w-[1140px] mx-auto px-[15px] py-6 flex flex-wrap gap-4 items-start justify-start">
             {blogPost?.map((post) => (
@@ -77,6 +75,13 @@ const Home = () => {
             ))}
           </div>
         </div>
+        {/* <div
+          className={`${
+            blogPost?.length === 0 && "mt-[850px] md:mt-[410px] lg:mt-[330px]"
+          }`}
+        >
+          <Footer footer={footer} />
+        </div> */}
         <Footer footer={footer} />
       </div>
     </>
