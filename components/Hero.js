@@ -2,30 +2,19 @@ import { ChevronsRight } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 const Hero = ({ heroPost }) => {
-  const [show, setShow] = useState(false);
   const desc = heroPost?.excerpt?.replace(/<[^>]+>/g, "").trim();
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShow(true);
-    }, 1500);
-    return () => clearTimeout(timeout);
-  }, []);
+
   return (
     <div className="bg-[#e9ecef] rounded-sm py-10 md:py-[74px] px-4 md:px-8 h-[450px] md:h-[380px] lg:h-[350px] flex items-center">
       <div className="md:w-[720px] lg:w-[960px] xl:w-[1140px] mx-auto px-[15px]">
         <h1 className="text-7xl font-light text-[#212529] mb-3">
           {heroPost?.title}
         </h1>
-        {/* <p
-          dangerouslySetInnerHTML={{ __html: heroPost?.excerpt }}
-          className="text-[#212529] mb-4"
-        ></p> */}
+
         <p className="text-[#212529] mb-4">{desc}</p>
-        {show && (
-          <button className="flex items-center justify-center w-[150px] h-12 bg-[#007bff] hover:bg-[#0069D9] text-[20px] text-white rounded-md ">
-            <p>Learn more</p> <ChevronsRight className="w-4 h-4 mt-1 ml-1" />
-          </button>
-        )}
+        <button className="flex items-center justify-center w-[150px] h-12 bg-[#007bff] hover:bg-[#0069D9] text-[20px] text-white rounded-md ">
+          <p>Learn more</p> <ChevronsRight className="w-4 h-4 mt-1 ml-1" />
+        </button>
       </div>
     </div>
   );
