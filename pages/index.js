@@ -10,40 +10,32 @@ import { getAllPosts } from "@/lib/posts";
 const inter = Inter({ subsets: ["latin"] });
 
 import React from "react";
+import { getMenu } from "@/lib/menu";
 
-const Home = () => {
-  const [posts, setPosts] = useState([]);
-  const [heroPost, setHeroPost] = useState([]);
-  const [blogPost, setBlogPost] = useState([]);
-  const [footer, setFooter] = useState([]);
+export async function getStaticProps() {
+  const allPosts = await getAllPosts();
+  const menuItems = await getMenu();
+  return {
+    props: {
+      posts: allPosts,
+      menuItems: menuItems,
+    },
+    revalidate: 60,
+  };
+}
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const allPosts = await getAllPosts();
-      setPosts(allPosts);
-    };
-    fetchPosts();
-  }, []);
+export default function Home({ posts, menuItems }) {
+  const heroPost = posts?.nodes?.find((item) => {
+    return item.categories.nodes.some((category) => category.slug === "hero");
+  });
 
-  useEffect(() => {
-    const hero = posts?.nodes?.find((item) => {
-      return item.categories.nodes.some((category) => category.slug === "hero");
-    });
+  const blogPost = posts?.nodes?.filter((item) => {
+    return item.categories.nodes.some((category) => category.slug === "blog");
+  });
 
-    const blogs = posts?.nodes?.filter((item) => {
-      return item.categories.nodes.some((category) => category.slug === "blog");
-    });
-
-    const last = posts?.nodes?.find((item) => {
-      return item.categories.nodes.some(
-        (category) => category.slug === "footer"
-      );
-    });
-
-    setHeroPost(hero);
-    setBlogPost(blogs);
-    setFooter(last);
-  }, [posts?.nodes]);
+  const footer = posts?.nodes?.find((item) => {
+    return item.categories.nodes.some((category) => category.slug === "footer");
+  });
 
   return (
     <>
@@ -57,7 +49,7 @@ const Home = () => {
         />
       </Head>
       <div>
-        <Navbar />
+        <Navbar menuItems={menuItems} />
         <Hero heroPost={heroPost} />
         <div
           className={` ${
@@ -77,6 +69,4 @@ const Home = () => {
       </div>
     </>
   );
-};
-
-export default Home;
+}

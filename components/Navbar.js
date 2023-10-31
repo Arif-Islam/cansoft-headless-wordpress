@@ -1,22 +1,12 @@
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Menu } from "lucide-react";
-import { getMenu } from "@/lib/menu";
 import DesktopMenu from "./DesktopMenu";
 import MobileMenu from "./MobileMenu";
 
-const Navbar = () => {
+export default function Navbar({ menuItems }) {
   const [dropdown, setDropdown] = useState(false);
   const [menu, setMenu] = useState(false);
-  const [menuItems, setMenuItems] = useState([]);
-
-  useEffect(() => {
-    const fetchMenu = async () => {
-      const data = await getMenu();
-      setMenuItems(data);
-    };
-    fetchMenu();
-  }, []);
 
   const toggleMenu = () => {
     setMenu(!menu);
@@ -85,6 +75,4 @@ const Navbar = () => {
       )}
     </div>
   );
-};
-
-export default Navbar;
+}
