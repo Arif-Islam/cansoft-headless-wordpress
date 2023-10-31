@@ -56,9 +56,9 @@ export default function Home({ posts, menuItems }) {
             blogPost?.length < 7 &&
             blogPost?.length > 3 &&
             "h-[1600px] md:h-[820px] lg:h-[660px]"
-          } h-[850px] md:h-[410px] lg:h-[330px]`}
+          } h-[850px] md:h-[410px] lg:h-[330px] `}
         >
-          <div className="md:w-[720px] lg:w-[960px] xl:w-[1140px] mx-auto px-[15px] py-6 flex flex-wrap gap-4 items-start justify-start">
+          <div className="w-auto md:w-[720px] lg:w-[960px] xl:w-[1140px] mx-auto px-[15px] py-6 flex flex-wrap gap-4 items-start justify-start">
             {blogPost?.map((post) => (
               <Card key={post.id} post={post} />
             ))}

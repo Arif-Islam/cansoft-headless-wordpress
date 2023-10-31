@@ -4,7 +4,7 @@ import React, { useState } from "react";
 const Card = ({ post }) => {
   const desc = post?.excerpt?.replace(/<[^>]+>/g, "").trim();
   return (
-    <div className="w-auto md:w-[219px] lg:w-[299px] xl:w-[359px] mx-auto ">
+    <div className="w-[350px] md:w-[219px] lg:w-[299px] xl:w-[359px] mx-auto flex flex-col items-start justify-start">
       <h1 className="text-[32px] font-medium  text-[#212529] mb-2">
         {post.title}
       </h1>
