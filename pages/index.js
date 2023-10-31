@@ -16,6 +16,7 @@ const Home = () => {
   const [heroPost, setHeroPost] = useState([]);
   const [blogPost, setBlogPost] = useState([]);
   const [footer, setFooter] = useState([]);
+  const [load, setLoad] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -43,12 +44,14 @@ const Home = () => {
     setHeroPost(hero);
     setBlogPost(blogs);
     setFooter(last);
+    setLoad(true);
   }, [posts?.nodes]);
 
   return (
     <>
       <Head>
         <link rel="preconnect" href="https://arifultest.csoft.ca/" />
+        {/* <link rel="manifest" href="manifest.json" /> */}
         <title key="pagetitle">Welcome To HomePage</title>
         <meta
           name="description"
