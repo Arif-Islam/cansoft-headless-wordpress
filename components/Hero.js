@@ -4,7 +4,7 @@ import React from "react";
 const Hero = ({ heroPost }) => {
   const desc = heroPost?.excerpt?.replace(/<[^>]+>/g, "").trim();
   return (
-    <div className="bg-[#e9ecef] rounded-sm py-10 md:py-[74px] px-4 md:px-8 ">
+    <div className="bg-[#e9ecef] rounded-sm py-10 md:py-[74px] px-4 md:px-8 h-[450px] md:h-[380px] lg:h-[350px] flex items-center">
       <div className="md:w-[720px] lg:w-[960px] xl:w-[1140px] mx-auto px-[15px]">
         <h1 className="text-7xl font-light  text-[#212529] mb-3">
           {heroPost?.title}
