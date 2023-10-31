@@ -54,7 +54,7 @@ export default function Home({ posts, menuItems }) {
         <div
           className={` ${
             blogPost?.length < 7 && blogPost?.length > 3
-              ? "h-[1600px] md:h-[820px] lg:h-[660px]"
+              ? "h-[1400px] md:h-[820px] lg:h-[630px]"
               : "h-[850px] md:h-[410px] lg:h-[330px]"
           } `}
         >
